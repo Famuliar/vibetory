@@ -1,0 +1,65 @@
+0
+0
+0
+0
+0
+0
+0
+0
+1
+9
+
+---------------------------
+
+int Nmax;
+int Nmin;
+int N;
+int i;
+
+read Nmax;
+Nmin = Nmax;
+i = 1;
+
+while (i <= 9)
+{
+    read N;
+    if (N < Nmin) Nmin = N;
+    else if (N > Nmax) Nmax = N;
+    i = i + 1;
+}
+
+write Nmin;
+write Nmax;
+
+---------------------------
+
+RC N
+Send N Nmax
+Send N Nmin
+Send 8 K
+Send 1 I
+
+Loop:
+RC N
+DedC N Nmin
+GoIf Min CheckMax
+
+Min:
+Send N Nmin
+Go Next
+
+CheckMax:
+DedC N Nmax
+GoIf Next UpdateMax
+
+UpdateMax:
+Send N Nmax
+
+Next:
+DedC K I
+SendS K
+GoIf End Loop
+
+End:
+WrC Nmin
+WrC Nmax
